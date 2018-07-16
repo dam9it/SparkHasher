@@ -10,6 +10,7 @@ public class Main {
     public static void main(String[] args) {
         
         post("/hash", "application/json", (req,res) -> {
+        	try {
         	String[] parts = req.body().split("\"");
         	String[] parts2 = parts[2].split("-");
         	String lines[] = parts2[0].split("\\r?\\n");
@@ -22,7 +23,12 @@ public class Main {
         	  obj.toString(); 
         	
         	return obj;
-    
+        	}catch (Exception e) {
+        		JSONObject obj = new JSONObject();
+          	  obj.put("Error", "Invalid input");
+          	  obj.toString(); 
+        		return obj;
+			}
         	});
     }
 }
